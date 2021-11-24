@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import cv2
+import sys
 
 
 def main():
@@ -56,7 +57,7 @@ def main():
 
 def detect_water(orto_path, pickle_path):
     # labai ilga operacija (~5-10 minuciu), naudoja daug kompiuterio resursu
-    mask = wd.DWWaterDetect.run_water_detect(input_folder=f"C:/Users/User/Desktop/Test/input/{orto_path}", output_folder='C:/Users/User/Desktop/Test/output', single_mode=True, product=wd.DWProducts.Sentinel2_ESA, config_file='WaterDetect.ini')
+    mask = wd.DWWaterDetect.run_water_detect(input_folder=f"{sys.path[1]}/input/{orto_path}", output_folder=f"{sys.path[1]}/output", single_mode=True, product=wd.DWProducts.Sentinel2_ESA, config_file='WaterDetect.ini')
 
     # issaugoja water_mask, kad nereiketu is naujo analizuoti
     save_mask(pickle_path, mask.water_mask[1000:1800, 8250:10000])

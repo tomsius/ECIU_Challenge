@@ -1,11 +1,10 @@
 import waterdetect as wd
 from PIL import Image
 import pickle as pkl
-import matplotlib.pyplot as plt
 import numpy as np
-import os
 import cv2
 import sys
+import os
 
 
 def main():

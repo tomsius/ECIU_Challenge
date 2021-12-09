@@ -15,32 +15,39 @@ def compare_water(date_from, date_to):
     more_water_colour = [255, 128, 0]
     less_water_colour = [255, 0, 0]
 
-    more_water = 0
-    less_water = 0
+    water_from = 0
+    water_to = 0
 
     pixels = np.asarray(image_to)
     for i in range(water_mask_from.shape[0]):
         for j in range(water_mask_from.shape[1]):
             if water_mask_from[i, j] == 1 and water_mask_to[i, j] == 0:
                 pixels[i, j] = less_water_colour
-                less_water += 1
             elif water_mask_from[i, j] == 0 and water_mask_to[i, j] == 1:
                 pixels[i, j] = more_water_colour
-                more_water += 1
+
+            if water_mask_from[i, j] == 1:
+                water_from += 1
+
+            if water_mask_to[i, j] == 1:
+                water_to += 1
 
     img = Image.fromarray(pixels)
     img.save(f"{sys.path[1]}/water_comparison/{date_from}-{date_to}.jpeg")
 
     # 1 pixel = 10x10m = 100 m^2
-    more_water_area = more_water * 100
-    less_water_area = less_water * 100
+    water_from_area = water_from * 100
+    water_to_area = water_to * 100
 
-    # positive - more water than before, negative - less water than before
-    difference = more_water_area - less_water_area
-    change_percentage = abs(difference) / (water_mask_from.shape[0] * water_mask_from.shape[1] * 100) * 100
-    print(f"Aptikta daugiau vandens: {more_water_area} m^2. Aptika mažiau vandens: {less_water_area} m^2. Pokytis: {difference} m^2 arba {round(change_percentage, 5)}%.")
+    coefficient = water_from_area / water_to_area * 100 - 100 if water_from_area > water_to_area else water_to_area / water_from_area * 100 - 100
 
-    return more_water_area, less_water_area, change_percentage
+    if water_from_area > water_to_area:
+        coefficient *= -1
+
+    print(water_from_area, water_to_area)
+    print(f"Vandens ploto pokytis: {round(coefficient, 5)}%.")
+
+    return coefficient
 
 
 def compare_forest():

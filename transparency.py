@@ -1,5 +1,4 @@
 from PIL import Image
-import numpy as np
 import sys
 import os
 
@@ -24,7 +23,7 @@ def make_water_mask_transparent(filename):
     newData = []
 
     for item in data:
-        if item[0] != 0 and item[1] != 0 and item[2] != 255:
+        if item[0] > 5 and item[1] > 5 and item[2] < 240:
             newData.append((item[0], item[1], item[2], 0))
         else:
             newData.append(item)

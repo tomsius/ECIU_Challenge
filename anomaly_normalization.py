@@ -34,7 +34,7 @@ def fix_undetected_water(base_date, target_date):
     pixels = np.asarray(target_water_image)
     for i in range(base_water_mask.shape[0]):
         for j in range(base_water_mask.shape[1]):
-            if base_water_mask[i, j] == 1 and pixels[i, j][0] <= 50 and pixels[i, j][1] <= 50 and pixels[i, j][2] <= 50:
+            if base_water_mask[i, j] == 1 and pixels[i, j][0] <= 50 and pixels[i, j][1] <= 50 and pixels[i, j][2] <= 255:
                 pixels[i, j] = [0, 0, 255]
                 target_water_mask[i, j] = 1
 

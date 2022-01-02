@@ -2,10 +2,15 @@ from PIL import Image
 import numpy as np
 import detection
 import sys
+import os
 
 
 def main():
-    compare_water("20210419", "20211031")
+    files = os.listdir(f"{sys.path[1]}/water_only")
+    for first in files:
+        for second in files:
+            if first != second and not os.path.exists(f"{sys.path[1]}/water_comparison/{first[:-5]}-{second[:-5]}.jpeg"):
+                compare_water(first[:-5], second[:-5])
 
 
 def compare_water(date_from, date_to):

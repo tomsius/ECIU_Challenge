@@ -48,6 +48,10 @@ def make_water_comparison_transparent(filename):
         else:
             newData.append(item)
 
+    for i in range(len(newData)):
+        if newData[i][0] <= 60 and newData[i][1] <= 60 and newData[i][2] <= 60:
+            newData[i] = (newData[i][0], newData[i][1], newData[i][2], 0)
+
     rgba.putdata(newData)
     rgba.save(f"{sys.path[1]}/transparent_comparison/{filename}.png", "PNG")
 

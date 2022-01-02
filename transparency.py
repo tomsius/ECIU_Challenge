@@ -28,6 +28,10 @@ def make_water_mask_transparent(filename):
         else:
             newData.append(item)
 
+    for i in range(len(newData)):
+        if newData[i][0] <= 35 and newData[i][1] <= 25 and newData[i][2] <= 55:
+            newData[i] = (newData[i][0], newData[i][1], newData[i][2], 0)
+
     rgba.putdata(newData)
     rgba.save(f"{sys.path[1]}/transparent_water/{filename}.png", "PNG")
 
